@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Digital — ExpositoXT29</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #FDFCFA;
+            --color-text: #1a1a1a;
+            --color-text-muted: #666;
+            --color-accent: #FF5E1A;
+            --color-accent-light: #FFF0E8;
+            --color-border: #E8E4E0;
+            --color-card: #FFFFFF;
+            --color-dark: #1a1a1a;
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 8rem;
+            --max-width: 1200px;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+        h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: var(--spacing-md); }
+        h3 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); margin-bottom: var(--spacing-sm); }
+
+        p { margin-bottom: var(--spacing-sm); }
+
+        a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        a:hover { opacity: 0.7; }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        section {
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(253, 252, 250, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 100;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--color-text);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, var(--color-accent-light) 0%, transparent 60%);
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--color-dark);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .hero h1 {
+            margin-bottom: var(--spacing-md);
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+        }
+
+        .hero h1 em {
+            color: var(--color-accent);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--color-border);
+            animation: fadeInUp 0.6s ease-out 0.3s backwards;
+        }
+
+        .hero-meta-item span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .hero-meta-item strong {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Headers */
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: var(--spacing-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        /* Metric Cards */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: var(--spacing-md);
+        }
+
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--color-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .metric-card.positive .metric-value { color: #22c55e; }
+        .metric-card.negative .metric-value { color: #ef4444; }
+        .metric-card.warning .metric-value { color: var(--color-accent); }
+
+        /* Highlight Quote */
+        .highlight-quote {
+            background: linear-gradient(135deg, var(--color-dark) 0%, #2d2d2d 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin: var(--spacing-lg) 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-family: var(--font-display);
+            font-size: 12rem;
+            color: rgba(255,255,255,0.05);
+            line-height: 1;
+        }
+
+        .highlight-quote p {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            margin: 0;
+        }
+
+        /* Expandable Sections */
+        .expandable {
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            margin: var(--spacing-sm) 0;
+            overflow: hidden;
+        }
+
+        .expandable-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--color-card);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .expandable-header:hover {
+            background: var(--color-accent-light);
+        }
+
+        .expandable-header h4 {
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .expandable-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, background 0.2s;
+        }
+
+        .expandable.active .expandable-icon {
+            transform: rotate(180deg);
+            background: var(--color-accent);
+            color: white;
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .expandable.active .expandable-content {
+            max-height: 2000px;
+        }
+
+        .expandable-content-inner {
+            padding: var(--spacing-md);
+            background: #FAFAFA;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .expandable-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .expandable-content li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .expandable-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .service-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: var(--spacing-md);
+            align-items: start;
+            padding: var(--spacing-md);
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--color-accent);
+            box-shadow: 0 10px 30px rgba(255, 94, 26, 0.1);
+        }
+
+        .service-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--color-border);
+            line-height: 1;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .service-card h3 {
+            color: var(--color-text);
+        }
+
+        .service-price {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-accent);
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .service-description {
+            color: var(--color-text-muted);
+            margin-bottom: var(--spacing-md);
+        }
+
+        @media (max-width: 600px) {
+            .service-card {
+                grid-template-columns: 1fr;
+            }
+            .service-price {
+                text-align: left;
+                margin-bottom: var(--spacing-sm);
+            }
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: var(--spacing-lg) 0;
+            padding-left: var(--spacing-lg);
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--color-accent), var(--color-border));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: var(--spacing-md);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: calc(-1 * var(--spacing-lg) + 8px);
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            border: 3px solid var(--color-bg);
+        }
+
+        .timeline-week {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-description {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Investment Tables */
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+            background: var(--color-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+        }
+
+        .investment-table th,
+        .investment-table td {
+            padding: var(--spacing-sm) var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .investment-table th {
+            background: #F5F3F0;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .investment-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .investment-table .total-row {
+            background: var(--color-dark);
+            color: white;
+        }
+
+        .investment-table .total-row td {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            border: none;
+        }
+
+        .investment-table .price-cell {
+            text-align: right;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+        }
+
+        /* CMS Section */
+        .cms-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .cms-feature {
+            padding: var(--spacing-md);
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+        }
+
+        .cms-feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--color-accent-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.5rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--spacing-sm);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .comparison-table th {
+            font-weight: 600;
+        }
+
+        .comparison-table th:first-child {
+            width: 30%;
+        }
+
+        .comparison-table .check {
+            color: #22c55e;
+        }
+
+        .comparison-table .cross {
+            color: #ef4444;
+        }
+
+        .comparison-table .warning {
+            color: var(--color-accent);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--color-dark) 0%, #2d2d2d 100%);
+            color: white;
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-md);
+            border-radius: var(--radius);
+            margin: var(--spacing-lg) 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 94, 26, 0.2) 0%, transparent 50%);
+        }
+
+        .cta-section h2 {
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto var(--spacing-md);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--color-accent);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 94, 26, 0.4);
+            opacity: 1;
+        }
+
+        .cta-alt {
+            margin-top: var(--spacing-md);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: var(--spacing-lg) 0;
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .kpi-card {
+            padding: var(--spacing-md);
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .kpi-card h4 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .kpi-card p {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-card .kpi-metric {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--color-accent);
+        }
+
+        /* Two Column Layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Notes Box */
+        .notes-box {
+            background: var(--color-accent-light);
+            border-left: 4px solid var(--color-accent);
+            padding: var(--spacing-md);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: var(--spacing-md) 0;
+        }
+
+        .notes-box h4 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-accent);
+        }
+
+        .notes-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .notes-box li {
+            padding: 0.25rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* Recurrent Services */
+        .recurrent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .recurrent-card {
+            padding: var(--spacing-md);
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+        }
+
+        .recurrent-card.featured {
+            border-color: var(--color-accent);
+            position: relative;
+        }
+
+        .recurrent-card.featured::before {
+            content: 'Recomanat';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--color-accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .recurrent-card h4 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .recurrent-card .price {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .recurrent-card .price span {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .recurrent-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .recurrent-card li {
+            padding: 0.35rem 0;
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recurrent-card li::before {
+            content: '✓';
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .summary-box h3 {
+            color: white;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-top: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+            border-top: 2px solid var(--color-accent);
+        }
+
+        .summary-row .label {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .summary-row .value {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+        }
+
+        .summary-row:last-child .value {
+            font-size: 1.5rem;
+            color: var(--color-accent);
+        }
+
+        /* Print Styles */
+        @media print {
+            nav { display: none; }
+            .hero { min-height: auto; padding-top: 0; }
+            section { padding: 2rem 0; }
+            .expandable-content { max-height: none !important; }
+            .card:hover, .service-card:hover { transform: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-logo">Proposta Digital</div>
+            <ul class="nav-links">
+                <li><a href="#context">Context</a></li>
+                <li><a href="#objectius">Objectius</a></li>
+                <li><a href="#serveis">Serveis</a></li>
+                <li><a href="#inversio">Inversió</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">Proposta de Serveis</span>
+                <h1>Posiciona ExpositoXT29 als <em>motors del futur</em></h1>
+                <p class="hero-subtitle">Estratègia integral de posicionament SEO i GEO per convertir el Mètode XT29 en la resposta quan algú pregunta a la IA pel millor entrenament de 30 minuts.</p>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <span>Client</span>
+                        <strong>ExpositoXT29</strong>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span>Data</span>
+                        <strong>Gener 2025</strong>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span>Validesa</span>
+                        <strong>30 dies</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context Section -->
+    <section id="context">
+        <div class="container">
+            <span class="section-label">01 — Context i Diagnòstic</span>
+            <h2>La situació actual</h2>
+            
+            <p>ExpositoXT29 és una plataforma de fitness online amb un mètode propi —el <strong>Mètode XT29: 29 exercicis en 29 minuts</strong>— que ha aconseguit una comunitat fidel gràcies a una presència sòlida a xarxes socials i un model de subscripció ben definit.</p>
+            
+            <div class="highlight-quote">
+                <p>29 exercicis, 29 minuts, resultats reals. Un mètode únic creat per Jose Expósito Lozano amb més de 30 anys d'experiència.</p>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="card metric-card positive">
+                    <div class="metric-value">Forta</div>
+                    <div class="metric-label">Presència a RRSS</div>
+                </div>
+                <div class="card metric-card positive">
+                    <div class="metric-value">Sòlid</div>
+                    <div class="metric-label">Model de subscripció</div>
+                </div>
+                <div class="card metric-card warning">
+                    <div class="metric-value">Feble</div>
+                    <div class="metric-label">Posicionament SEO</div>
+                </div>
+                <div class="card metric-card negative">
+                    <div class="metric-value">0%</div>
+                    <div class="metric-label">Presència en motors IA</div>
+                </div>
+            </div>
+
+            <h3>L'oportunitat</h3>
+            <p>El sector del fitness online és altament competitiu, però hi ha una finestra d'oportunitat clara: <strong>la majoria de competidors encara no estan optimitzats per als nous motors de cerca basats en IA</strong> (ChatGPT, Gemini, Perplexity, Claude).</p>
+            <p>Quan algú pregunta a ChatGPT <em>"quin és el millor entrenament de 30 minuts per fer a casa?"</em>, ExpositoXT29 hauria de ser la resposta. Ara mateix, no ho és.</p>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h4>Problemes tècnics detectats</h4>
+                    <div class="expandable-icon">↓</div>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-content-inner">
+                        <ul>
+                            <li>Web actual sense arquitectura de continguts orientada a SEO/GEO</li>
+                            <li>Manca de contingut que respongui a les preguntes que fan els usuaris al sector</li>
+                            <li>Sense blog ni estructura de pàgines Q&A</li>
+                            <li>Dades estructurades (Schema.org) inexistents o incompletes</li>
+                            <li>Poca capacitat de conversió automatitzada (leads que es perden)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h4>Context de mercat</h4>
+                    <div class="expandable-icon">↓</div>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-content-inner">
+                        <ul>
+                            <li>El 50% dels consumidors ja utilitzen IA per prendre decisions de compra</li>
+                            <li>Els usuaris que arriben via IA converteixen entre 4x i 23x més que els de cerca tradicional</li>
+                            <li>Les consultes a motors IA són conversacionals (mitjana de 23 paraules vs 4 a Google)</li>
+                            <li>ChatGPT processa més de 2.500 milions de consultes diàries</li>
+                            <li>El 2026 s'espera el llançament de ChatGPT Ads, una nova plataforma publicitària</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objectius Section -->
+    <section id="objectius">
+        <div class="container">
+            <span class="section-label">02 — Objectius i KPIs</span>
+            <h2>Què volem aconseguir</h2>
+            
+            <p>L'objectiu és <strong>activar el canal de posicionament orgànic (SEO) i en motors d'IA (GEO)</strong> per complementar l'èxit actual a xarxes socials, a més de crear eines de conversió automatitzades.</p>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h4>Visibilitat SEO</h4>
+                    <p>Posicionar per paraules clau del sector fitness</p>
+                    <span class="kpi-metric">Top 10 per 15+ keywords en 6 mesos</span>
+                </div>
+                <div class="kpi-card">
+                    <h4>Visibilitat GEO</h4>
+                    <p>Aparèixer en respostes de motors IA</p>
+                    <span class="kpi-metric">Mencions en ChatGPT/Gemini per consultes clau</span>
+                </div>
+                <div class="kpi-card">
+                    <h4>Conversió de leads</h4>
+                    <p>Captar potencials clients amb el Quiz Funnel</p>
+                    <span class="kpi-metric">+200 leads qualificats/mes</span>
+                </div>
+                <div class="kpi-card">
+                    <h4>Atenció automatitzada</h4>
+                    <p>Respondre consultes 24h amb chatbot</p>
+                    <span class="kpi-metric">80% consultes resoltes automàticament</span>
+                </div>
+                <div class="kpi-card">
+                    <h4>Trànsit qualificat</h4>
+                    <p>Atreure visites amb intenció de compra</p>
+                    <span class="kpi-metric">+40% trànsit orgànic en 6 mesos</span>
+                </div>
+                <div class="kpi-card">
+                    <h4>Autoritat de marca</h4>
+                    <p>Consolidar Jose Expósito com a referent</p>
+                    <span class="kpi-metric">Perfil d'entitat reconegut per IA</span>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h4>Consultes IA on hauria d'aparèixer ExpositoXT29</h4>
+                    <div class="expandable-icon">↓</div>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-content-inner">
+                        <ul>
+                            <li>"Quin és el millor entrenament de 30 minuts per fer a casa?"</li>
+                            <li>"Entrenament HIIT curt i efectiu sense material"</li>
+                            <li>"Millor programa de fitness online per a gent ocupada"</li>
+                            <li>"Mètode d'entrenament ràpid per perdre pes"</li>
+                            <li>"Entrenador personal online amb mètode propi"</li>
+                            <li>"Rutina diària de 30 minuts per posar-se en forma"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Oportunitat GEO Section -->
+    <section>
+        <div class="container">
+            <span class="section-label">03 — L'oportunitat</span>
+            <h2>De SEO a GEO: El canvi de paradigma</h2>
+            
+            <div class="two-columns">
+                <div>
+                    <p>La cerca digital està en un punt d'inflexió. Durant 20 anys, Google ha dominat amb llistes d'enllaços. Ara, els motors d'IA ofereixen <strong>respostes directes i conversacionals</strong>.</p>
+                    <p>Això significa que ja no n'hi ha prou amb aparèixer a Google. Cal ser la font d'informació que la IA cita quan algú li pregunta sobre el teu sector.</p>
+                </div>
+                <div>
+                    <div class="highlight-quote" style="margin: 0;">
+                        <p style="font-size: 1.2rem;">Quan algú pregunta a ChatGPT "quin és el millor mètode de fitness de menys de 30 minuts?", volem que la resposta sigui: "El Mètode XT29 de Jose Expósito Lozano..."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metrics-grid" style="margin-top: var(--spacing-lg);">
+                <div class="card">
+                    <h4 style="color: var(--color-accent); margin-bottom: 0.5rem;">Finestra d'oportunitat</h4>
+                    <p style="margin: 0; color: var(--color-text-muted);">La majoria de competidors encara no fan GEO</p>
+                </div>
+                <div class="card">
+                    <h4 style="color: var(--color-accent); margin-bottom: 0.5rem;">Conversió superior</h4>
+                    <p style="margin: 0; color: var(--color-text-muted);">Usuaris via IA ja vénen preparats per comprar</p>
+                </div>
+                <div class="card">
+                    <h4 style="color: var(--color-accent); margin-bottom: 0.5rem;">Cost menor</h4>
+                    <p style="margin: 0; color: var(--color-text-muted);">Un cop posicionat, el trànsit és orgànic i sostingut</p>
+                </div>
+                <div class="card">
+                    <h4 style="color: var(--color-accent); margin-bottom: 0.5rem;">Avantatge competitiu</h4>
+                    <p style="margin: 0; color: var(--color-text-muted);">Qui arribi primer tindrà l'autoritat establerta</p>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h4>Què és GEO (Generative Engine Optimization)?</h4>
+                    <div class="expandable-icon">↓</div>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-content-inner">
+                        <p>GEO és l'optimització de continguts perquè siguin citats i recomanats pels motors de cerca basats en intel·ligència artificial. Inclou:</p>
+                        <ul>
+                            <li>Arquitectura de continguts en format pregunta-resposta (Q&A)</li>
+                            <li>Dades estructurades (Schema.org) que la IA entén</li>
+                            <li>Contingut autoritari amb senyals E-E-A-T (Experiència, Expertesa, Autoritat, Confiança)</li>
+                            <li>Presència consistent a plataformes que alimenten els models d'IA</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serveis Section -->
+    <section id="serveis">
+        <div class="container">
+            <span class="section-label">04 — Àrees d'actuació</span>
+            <h2>Els serveis proposats</h2>
+
+            <div class="services-grid">
+                
+                <!-- Servei 1 -->
+                <div class="service-card">
+                    <div>
+                        <div class="service-number">01</div>
+                        <h3>Estratègia de Posicionament</h3>
+                        <p class="service-description">Estudi complet de paraules clau, preguntes del sector i disseny de l'arquitectura de la nova web optimitzada per SEO i GEO.</p>
+                        <div class="expandable" style="margin: 0;">
+                            <div class="expandable-header" onclick="toggleExpandable(this)">
+                                <h4>Què inclou</h4>
+                                <div class="expandable-icon">↓</div>
+                            </div>
+                            <div class="expandable-content">
+                                <div class="expandable-content-inner">
+                                    <ul>
+                                        <li>Recerca de paraules clau del sector fitness online</li>
+                                        <li>Anàlisi de les preguntes que fan els usuaris (cerca tradicional + IA)</li>
+                                        <li>Estudi de la competència i oportunitats de posicionament</li>
+                                        <li>Definició de l'arquitectura de continguts de la nova web</li>
+                                        <li>Pla de continguts prioritzat (pàgines, blog, Q&A)</li>
+                                        <li>Estratègia d'entitat per a "Jose Expósito Lozano" i "Mètode XT29"</li>
+                                    </ul>
+                                    <p style="margin-top: 1rem;"><strong>Què aconseguireu:</strong> Un full de ruta clar amb les prioritats de contingut que mouran l'agulla del negoci.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-price">1.800€</div>
+                </div>
+
+                <!-- Servei 2 - Web amb 3 opcions -->
+                <div class="service-card" style="grid-column: 1 / -1;">
+                    <div style="width: 100%;">
+                        <div class="service-number">02</div>
+                        <h3>Web amb Impuls CMS</h3>
+                        <p class="service-description">Nova web sobre Impuls CMS, la plataforma optimitzada per SEO i GEO. Tria l'opció que millor s'adapti a les teves necessitats.</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                            
+                            <!-- Opció Bàsica -->
+                            <div style="border: 1px solid var(--color-border); border-radius: var(--radius); padding: 1.5rem; background: var(--color-bg);">
+                                <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted);">Opció A</span>
+                                <h4 style="font-family: var(--font-display); font-size: 1.3rem; margin: 0.5rem 0;">Bàsica</h4>
+                                <div style="font-family: var(--font-display); font-size: 2rem; color: var(--color-accent); margin-bottom: 1rem;">2.800€</div>
+                                <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem;">Presència web essencial, neta i professional.</p>
+                                <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Pàgina Home</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Pàgina Contacte</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Disseny responsive</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> SEO bàsic configurat</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Formació CMS</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted);"><span>—</span> Sense blog</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted);"><span>—</span> Sense pàgines Q&A</li>
+                                </ul>
+                            </div>
+
+                            <!-- Opció Estàndard -->
+                            <div style="border: 2px solid var(--color-accent); border-radius: var(--radius); padding: 1.5rem; background: var(--color-card); position: relative;">
+                                <span style="position: absolute; top: -12px; right: 20px; background: var(--color-accent); color: white; padding: 0.25rem 0.75rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600;">Recomanada</span>
+                                <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted);">Opció B</span>
+                                <h4 style="font-family: var(--font-display); font-size: 1.3rem; margin: 0.5rem 0;">Estàndard</h4>
+                                <div style="font-family: var(--font-display); font-size: 2rem; color: var(--color-accent); margin-bottom: 1rem;">4.800€</div>
+                                <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem;">Web completa amb blog i contingut GEO inicial.</p>
+                                <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Tot de l'opció Bàsica</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Pàgines de serveis/programa</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Blog integrat</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> <strong>8-10 pàgines Q&A sectorials</strong></li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Pàgina autor (Jose Expósito)</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Pàgina pilar Mètode XT29</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Schema.org complet</li>
+                                </ul>
+                            </div>
+
+                            <!-- Opció Premium -->
+                            <div style="border: 1px solid var(--color-border); border-radius: var(--radius); padding: 1.5rem; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: white;">
+                                <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);">Opció C</span>
+                                <h4 style="font-family: var(--font-display); font-size: 1.3rem; margin: 0.5rem 0; color: white;">Premium</h4>
+                                <div style="font-family: var(--font-display); font-size: 2rem; color: var(--color-accent); margin-bottom: 1rem;">6.500€</div>
+                                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 1rem;">Màxima cobertura GEO i contingut ampliat.</p>
+                                <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Tot de l'opció Estàndard</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> <strong>20+ pàgines Q&A sectorials</strong></li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Hub de contingut temàtic</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Glossari del sector fitness</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> FAQs ampliades</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Casos d'èxit / Testimonis</li>
+                                    <li style="padding: 0.35rem 0; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--color-accent);">✓</span> Màxima cobertura GEO</li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <div class="expandable" style="margin-top: 1.5rem;">
+                            <div class="expandable-header" onclick="toggleExpandable(this)">
+                                <h4>Per què és important la web amb arquitectura GEO?</h4>
+                                <div class="expandable-icon">↓</div>
+                            </div>
+                            <div class="expandable-content">
+                                <div class="expandable-content-inner">
+                                    <p>Impuls CMS és una plataforma basada en Duda i infraestructura AWS, dissenyada des de l'arrel per complir els Core Web Vitals de Google i incloure components natius per GEO (schemas, Q&A, FAQs).</p>
+                                    <p>A diferència de WordPress, no hi ha conflictes de plugins ni necessitat de manteniment tècnic constant.</p>
+                                    <p><strong>Què aconseguireu:</strong> Una web ràpida, segura i preparada per posicionar-se tant a Google com als motors d'IA, amb contingut que respon les preguntes que fan els vostres clients potencials.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Servei 3 -->
+                <div class="service-card">
+                    <div>
+                        <div class="service-number">03</div>
+                        <h3>Quiz Funnel + Automatització</h3>
+                        <p class="service-description">Sistema de captació de leads mitjançant un quiz interactiu que qualifica els usuaris i els ofereix un pla personalitzat automàticament.</p>
+                        <div class="expandable" style="margin: 0;">
+                            <div class="expandable-header" onclick="toggleExpandable(this)">
+                                <h4>Què inclou</h4>
+                                <div class="expandable-icon">↓</div>
+                            </div>
+                            <div class="expandable-content">
+                                <div class="expandable-content-inner">
+                                    <ul>
+                                        <li>Disseny i creació del quiz interactiu</li>
+                                        <li>Lògica de qualificació segons respostes</li>
+                                        <li>Integració amb n8n per automatitzar el seguiment</li>
+                                        <li>Generació automàtica de pla personalitzat segons perfil</li>
+                                        <li>Seqüència d'emails automatitzada per nurturing</li>
+                                        <li>Integració amb el CRM o eina de mailing existent</li>
+                                    </ul>
+                                    <p style="margin-top: 1rem;"><strong>Què aconseguireu:</strong> Un lead magnet potent que converteix visitants en leads qualificats de manera automàtica, 24h al dia.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-price">2.200€</div>
+                </div>
+
+                <!-- Servei 4 -->
+                <div class="service-card">
+                    <div>
+                        <div class="service-number">04</div>
+                        <h3>Landing Google / ChatGPT Ads</h3>
+                        <p class="service-description">Pàgina d'aterratge optimitzada per a campanyes de publicitat, preparada per a Google Ads i els futurs ChatGPT Ads.</p>
+                        <div class="expandable" style="margin: 0;">
+                            <div class="expandable-header" onclick="toggleExpandable(this)">
+                                <h4>Què inclou</h4>
+                                <div class="expandable-icon">↓</div>
+                            </div>
+                            <div class="expandable-content">
+                                <div class="expandable-content-inner">
+                                    <ul>
+                                        <li>Disseny i maquetació de landing page</li>
+                                        <li>Copy orientat a conversió</li>
+                                        <li>A/B testing preparat</li>
+                                        <li>Integració amb píxels de seguiment</li>
+                                        <li>Optimització de velocitat de càrrega</li>
+                                    </ul>
+                                    <p style="margin-top: 1rem;"><strong>Què aconseguireu:</strong> Una pàgina dedicada a convertir el trànsit de pagament en subscriptors.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-price">650€</div>
+                </div>
+
+                <!-- Servei 5 -->
+                <div class="service-card">
+                    <div>
+                        <div class="service-number">05</div>
+                        <h3>Chatbot Comercial 24h</h3>
+                        <p class="service-description">Assistent virtual amb intel·ligència artificial per atendre consultes i guiar visitants cap a la conversió, disponible 24 hores al dia.</p>
+                        <div class="expandable" style="margin: 0;">
+                            <div class="expandable-header" onclick="toggleExpandable(this)">
+                                <h4>Què inclou</h4>
+                                <div class="expandable-icon">↓</div>
+                            </div>
+                            <div class="expandable-content">
+                                <div class="expandable-content-inner">
+                                    <ul>
+                                        <li>Configuració i entrenament del chatbot amb informació d'ExpositoXT29</li>
+                                        <li>Integració a la web</li>
+                                        <li>Fluxos de conversa per a dubtes freqüents</li>
+                                        <li>Derivació a formulari de contacte o prova gratuïta</li>
+                                        <li>Formació per gestionar i millorar el chatbot</li>
+                                    </ul>
+                                    <p style="margin-top: 1rem;"><strong>Què aconseguireu:</strong> Atenció al client automatitzada que no dorm i manté un to consistent amb la marca.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-price">700€</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Cronograma Section -->
+    <section>
+        <div class="container">
+            <span class="section-label">05 — Cronograma</span>
+            <h2>Com ho farem</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-week">Setmanes 1-2</div>
+                    <div class="timeline-title">Fase 1: Estratègia</div>
+                    <div class="timeline-description">Recerca de paraules clau, anàlisi de competència i definició de l'arquitectura de continguts</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-week">Setmanes 3-4</div>
+                    <div class="timeline-title">Fase 2: Disseny</div>
+                    <div class="timeline-description">Disseny visual de la web i aprovació de maquetes</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-week">Setmanes 5-7</div>
+                    <div class="timeline-title">Fase 3: Desenvolupament</div>
+                    <div class="timeline-description">Construcció de la web, blog i pàgines Q&A sectorials</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-week">Setmanes 6-8</div>
+                    <div class="timeline-title">Fase 4: Eines de conversió</div>
+                    <div class="timeline-description">Quiz Funnel, Landing page i Chatbot</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-week">Setmanes 8-9</div>
+                    <div class="timeline-title">Fase 5: Llançament</div>
+                    <div class="timeline-description">Testing, formació i posada en marxa</div>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: var(--color-text-muted); margin-top: var(--spacing-md);"><strong>Durada total estimada:</strong> 8-9 setmanes</p>
+        </div>
+    </section>
+
+    <!-- Inversió Section -->
+    <section id="inversio">
+        <div class="container">
+            <span class="section-label">06 — Inversió</span>
+            <h2>El pressupost</h2>
+
+            <h3>Projecte inicial</h3>
+            
+            <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md);">El pressupost varia segons l'opció de web escollida:</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: var(--spacing-md);">
+                
+                <!-- Opció A -->
+                <div style="border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden;">
+                    <div style="background: #F5F3F0; padding: 1rem; text-align: center;">
+                        <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted);">Opció A — Bàsica</span>
+                    </div>
+                    <div style="padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Estratègia posicionament</span>
+                            <span style="font-family: var(--font-display);">1.800€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Web Bàsica</span>
+                            <span style="font-family: var(--font-display);">2.800€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Quiz Funnel + n8n</span>
+                            <span style="font-family: var(--font-display);">2.200€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Landing Ads</span>
+                            <span style="font-family: var(--font-display);">650€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Chatbot</span>
+                            <span style="font-family: var(--font-display);">700€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 1rem 0 0.5rem; margin-top: 0.5rem; border-top: 2px solid var(--color-dark);">
+                            <span style="font-weight: 600;">Total</span>
+                            <span style="font-family: var(--font-display); font-size: 1.3rem; color: var(--color-accent);">8.150€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opció B -->
+                <div style="border: 2px solid var(--color-accent); border-radius: var(--radius); overflow: hidden; position: relative;">
+                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-accent); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">RECOMANADA</span>
+                    <div style="background: var(--color-accent-light); padding: 1rem; text-align: center;">
+                        <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent);">Opció B — Estàndard</span>
+                    </div>
+                    <div style="padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Estratègia posicionament</span>
+                            <span style="font-family: var(--font-display);">1.800€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Web Estàndard (8-10 Q&A)</span>
+                            <span style="font-family: var(--font-display);">4.800€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Quiz Funnel + n8n</span>
+                            <span style="font-family: var(--font-display);">2.200€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Landing Ads</span>
+                            <span style="font-family: var(--font-display);">650€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border);">
+                            <span>Chatbot</span>
+                            <span style="font-family: var(--font-display);">700€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 1rem 0 0.5rem; margin-top: 0.5rem; border-top: 2px solid var(--color-accent);">
+                            <span style="font-weight: 600;">Total</span>
+                            <span style="font-family: var(--font-display); font-size: 1.3rem; color: var(--color-accent);">10.150€</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opció C -->
+                <div style="border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: white;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 1rem; text-align: center;">
+                        <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.7);">Opció C — Premium</span>
+                    </div>
+                    <div style="padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span>Estratègia posicionament</span>
+                            <span style="font-family: var(--font-display);">1.800€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span>Web Premium (20+ Q&A)</span>
+                            <span style="font-family: var(--font-display);">6.500€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span>Quiz Funnel + n8n</span>
+                            <span style="font-family: var(--font-display);">2.200€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span>Landing Ads</span>
+                            <span style="font-family: var(--font-display);">650€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <span>Chatbot</span>
+                            <span style="font-family: var(--font-display);">700€</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 1rem 0 0.5rem; margin-top: 0.5rem; border-top: 2px solid var(--color-accent);">
+                            <span style="font-weight: 600;">Total</span>
+                            <span style="font-family: var(--font-display); font-size: 1.3rem; color: var(--color-accent);">11.850€</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="notes-box">
+                <h4>Condicions de pagament</h4>
+                <ul>
+                    <li>• 50% a l'acceptació de la proposta</li>
+                    <li>• 50% al lliurament final</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: var(--spacing-lg);">Serveis recurrents</h3>
+            
+            <div class="recurrent-grid">
+                <div class="recurrent-card featured" style="grid-column: 1 / -1;">
+                    <h4>Impuls CMS Complet</h4>
+                    <div class="price">45€ <span>/mes</span></div>
+                    <p style="color: var(--color-text-muted); margin-bottom: 1rem;">Molt més que hosting: una plataforma completa de gestió web amb tot inclòs.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div>
+                            <strong style="color: var(--color-accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">Infraestructura</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Hosting AWS d'alta disponibilitat</li>
+                                <li>CDN global (velocitat mundial)</li>
+                                <li>Certificat SSL inclòs</li>
+                                <li>Backups diaris automàtics</li>
+                                <li>99.9% uptime garantit</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: var(--color-accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">Seguretat</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Tallafocs (WAF) actiu</li>
+                                <li>Protecció DDoS</li>
+                                <li>Monitoratge 24/7</li>
+                                <li>Actualitzacions de seguretat automàtiques</li>
+                                <li>Escaneig de vulnerabilitats</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: var(--color-accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">SEO i GEO</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Panel SEO integrat</li>
+                                <li>Schema.org automàtic (JSON-LD)</li>
+                                <li>Local Schema per geolocalització</li>
+                                <li>llms.txt per motors d'IA</li>
+                                <li>Sitemap XML automàtic</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: var(--color-accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">Integracions</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Google Search Console</li>
+                                <li>Google Analytics 4</li>
+                                <li>Google Tag Manager</li>
+                                <li>Píxels de seguiment (Meta, etc.)</li>
+                                <li>Connexió amb CRM</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: var(--color-accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">Gestió</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Editor visual intuïtiu</li>
+                                <li>Actualitzacions de plataforma gestionades</li>
+                                <li>Sense conflictes de plugins</li>
+                                <li>Multillengua natiu</li>
+                                <li>Gestió de redireccions</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong style="color: var(--color-accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">Suport</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Suport tècnic prioritari</li>
+                                <li>Formació continuada</li>
+                                <li>Documentació i tutorials</li>
+                                <li>Resolució d'incidències</li>
+                                <li>Assessorament proactiu</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recurrent-grid" style="margin-top: var(--spacing-md);">
+                <div class="recurrent-card">
+                    <h4>Chatbot</h4>
+                    <div class="price">Inclòs <span>Any 1</span></div>
+                    <ul>
+                        <li>Manteniment inclòs el primer any</li>
+                        <li>A partir del mes 13: 20€/mes</li>
+                    </ul>
+                </div>
+                <div class="recurrent-card">
+                    <h4>n8n (Quiz Funnel)</h4>
+                    <div class="price">Inclòs <span>Any 1</span></div>
+                    <ul>
+                        <li>Automatitzacions incloses el primer any</li>
+                        <li>A partir del mes 13: entorn propi del client</li>
+                        <li>O bé manteniment gestionat amb petit markup</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="margin-top: var(--spacing-lg);">Serveis opcionals</h3>
+            <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Serveis addicionals disponibles per ampliar l'estratègia digital. Consulteu-nos per a pressupost personalitzat.</p>
+
+            <div class="recurrent-grid">
+                <div class="recurrent-card">
+                    <h4>Gestió Google Ads</h4>
+                    <ul>
+                        <li>Creació i gestió de campanyes</li>
+                        <li>Optimització contínua</li>
+                        <li>Reporting mensual</li>
+                        <li>A/B testing d'anuncis</li>
+                        <li>Disponible quan s'activin campanyes</li>
+                    </ul>
+                    <p style="font-size: 0.85rem; color: var(--color-accent); margin-top: 1rem; font-weight: 500;">→ Consulteu condicions</p>
+                </div>
+                <div class="recurrent-card">
+                    <h4>Paquet Growth SEO/GEO</h4>
+                    <ul>
+                        <li>2-4 continguts GEO mensuals</li>
+                        <li>Monitorització motors IA</li>
+                        <li>Optimització contínua de pàgines</li>
+                        <li>Reunió mensual d'estratègia</li>
+                        <li>Suport prioritari</li>
+                        <li>Reporting mensual</li>
+                    </ul>
+                    <p style="font-size: 0.85rem; color: var(--color-accent); margin-top: 1rem; font-weight: 500;">→ Consulteu condicions</p>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <h3>Resum inversió primer any</h3>
+                <div class="summary-row">
+                    <span class="label">Projecte inicial (segons opció)</span>
+                    <span class="value">8.150€ — 11.850€</span>
+                </div>
+                <div class="summary-row">
+                    <span class="label">Impuls CMS Complet (12 mesos × 45€)</span>
+                    <span class="value">540€</span>
+                </div>
+                <div class="summary-row">
+                    <span class="label">Chatbot i n8n</span>
+                    <span class="value">Inclòs</span>
+                </div>
+                <div class="summary-row">
+                    <span class="label">Total Any 1</span>
+                    <span class="value">8.690€ — 12.390€</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impuls CMS Section -->
+    <section>
+        <div class="container">
+            <span class="section-label">07 — La plataforma</span>
+            <h2>Sobre Impuls CMS</h2>
+
+            <p>Impuls CMS és una plataforma especialitzada per crear i gestionar webs ràpides, segures i fàcils d'editar. Utilitza la tecnologia de <strong>Duda</strong> implementada sobre infraestructura <strong>AWS</strong> (CDN, SSL, alta disponibilitat).</p>
+
+            <h3 style="margin-top: var(--spacing-lg);">Què inclou Impuls CMS Complet (45€/mes)</h3>
+            <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Molt més que hosting: una plataforma completa de gestió web amb tot inclòs per no haver de preocupar-te de res.</p>
+
+            <div class="cms-features">
+                <div class="cms-feature">
+                    <div class="cms-feature-icon">⚡</div>
+                    <h4>Velocitat</h4>
+                    <p>Core Web Vitals optimitzats d'origen. Plantilles d'alt rendiment que obren ràpid i converteixen més.</p>
+                </div>
+                <div class="cms-feature">
+                    <div class="cms-feature-icon">🔒</div>
+                    <h4>Seguretat</h4>
+                    <p>AWS, WAF, SSL, backups diaris automàtics. Monitoratge continu per protegir el teu negoci.</p>
+                </div>
+                <div class="cms-feature">
+                    <div class="cms-feature-icon">🎯</div>
+                    <h4>SEO i GEO</h4>
+                    <p>Metadades, sitemaps, schema (Serveis, FAQs, Casos), canonicals i estructura semàntica perfectes.</p>
+                </div>
+                <div class="cms-feature">
+                    <div class="cms-feature-icon">✏️</div>
+                    <h4>Fàcil d'editar</h4>
+                    <p>Editor visual intuïtiu perquè el teu equip publiqui contingut en minuts sense necessitat de tècnics.</p>
+                </div>
+                <div class="cms-feature">
+                    <div class="cms-feature-icon">🤖</div>
+                    <h4>IA integrada</h4>
+                    <p>Eines d'IA natives per accelerar contingut i maquetació. Arquitectura optimitzada per motors IA.</p>
+                </div>
+                <div class="cms-feature">
+                    <div class="cms-feature-icon">🌍</div>
+                    <h4>Preparat per créixer</h4>
+                    <p>Multillengua natiu, pàgines locals, integració amb CRM, xat d'IA i automatitzacions comercials.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: var(--spacing-lg);">Comparativa amb altres plataformes</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspecte</th>
+                        <th>Impuls CMS</th>
+                        <th>WordPress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rendiment / Core Web Vitals</td>
+                        <td class="check">✓ Optimitzat d'origen</td>
+                        <td class="warning">⚠ Depèn de configuració</td>
+                    </tr>
+                    <tr>
+                        <td>SEO i GEO</td>
+                        <td class="check">✓ Tot integrat</td>
+                        <td class="warning">⚠ Variable segons plugins</td>
+                    </tr>
+                    <tr>
+                        <td>Actualitzacions</td>
+                        <td class="check">✓ Gestionades, sense trencaments</td>
+                        <td class="cross">✗ Conflictes freqüents</td>
+                    </tr>
+                    <tr>
+                        <td>Seguretat</td>
+                        <td class="check">✓ AWS, WAF, SSL, backups</td>
+                        <td class="cross">✗ Responsabilitat del client</td>
+                    </tr>
+                    <tr>
+                        <td>Facilitat d'ús</td>
+                        <td class="check">✓ Editor visual intuïtiu</td>
+                        <td class="warning">⚠ Potent però complex</td>
+                    </tr>
+                    <tr>
+                        <td>IA integrada</td>
+                        <td class="check">✓ Nativa</td>
+                        <td class="warning">⚠ Via plugins externs</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="border: none; padding-bottom: var(--spacing-lg);">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Preparat per dominar els motors del futur?</h2>
+                <p>Parlem sobre com podem fer que ExpositoXT29 sigui la resposta quan algú pregunta a la IA pel millor entrenament de 30 minuts.</p>
+                <a href="#" class="cta-button">Agendar una trucada</a>
+                <p class="cta-alt">O escriu-nos a: hola@[agencia].cat</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Proposta vàlida durant 30 dies des de la data d'emissió</p>
+            <p>IVA no inclòs (21%)</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleExpandable(header) {
+            const expandable = header.parentElement;
+            expandable.classList.toggle('active');
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to nav
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
